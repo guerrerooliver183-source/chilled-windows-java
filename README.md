@@ -1,44 +1,44 @@
 # Chilled Windows Java
 
-Versión de la aplicación **Chilled Windows** desarrollada íntegramente en **Java** utilizando la plataforma **JavaFX**.
+A version of the **Chilled Windows** application developed entirely in **Java** using the **JavaFX** platform.
 
-## Descripción
+## Description
 
-**Chilled Windows Java** es una aplicación de escritorio diseñada para ofrecer una experiencia multimedia dinámica. Utiliza transformaciones visuales avanzadas, como rotaciones y efectos de volteo (flipping), sincronizados con eventos temporales y de teclado para crear una interfaz interactiva y visualmente atractiva.
+**Chilled Windows Java** is a desktop application designed to provide a dynamic multimedia experience. It utilizes advanced visual transformations, such as rotations and flipping effects, synchronized with time and keyboard events to create an interactive and visually engaging interface.
 
-## Características Principales
+## Key Features
 
-- **Multiplataforma:** Compatible con Windows, macOS y Linux gracias a JavaFX.
-- **Interfaz Dinámica:** Implementada con FXML para una separación clara entre diseño y lógica.
-- **Animaciones Fluidas:** Sistema de temporización optimizado para transformaciones en tiempo real.
+- **Cross-Platform:** Compatible with Windows, macOS, and Linux thanks to JavaFX.
+- **Dynamic Interface:** Implemented with FXML for a clear separation between design and logic.
+- **Smooth Animations:** Optimized timing system for real-time transformations.
 
-## Tecnologías Utilizadas
+## Technologies Used
 
 - **Java 17+**
-- **JavaFX 17** (Gráficos, UI y Multimedia)
-- **Maven** (Gestión de dependencias y automatización de construcción)
+- **JavaFX 17** (Graphics, UI, and Multimedia)
+- **Maven** (Dependency management and build automation)
 
-## Cómo Ejecutar
+## How to Run
 
-Para compilar y ejecutar el proyecto en tu máquina local, asegúrate de tener instalado el JDK 17 (o superior) y Maven.
+To compile and run the project on your local machine, ensure you have JDK 17 (or higher) and Maven installed.
 
 ```bash
-# Clonar el repositorio
+# Clone the repository
 git clone https://github.com/guerrerooliver183-source/chilled-windows-java.git
 
-# Entrar al directorio
+# Enter the directory
 cd chilled-windows-java
 
-# Ejecutar la aplicación
+# Run the application
 mvn clean javafx:run
 ```
 
-## Estructura del Proyecto
+## Project Structure
 
-- `src/main/java/com/chilledwindows/Main.java`: Punto de entrada de la aplicación.
-- `src/main/java/com/chilledwindows/MainWindowController.java`: Lógica de control, animaciones y gestión de eventos.
-- `src/main/resources/com/chilledwindows/MainWindow.fxml`: Diseño de la interfaz de usuario.
-- `src/main/resources/com/chilledwindows/`: Recursos multimedia y visuales.
+- `src/main/java/com/chilledwindows/Main.java`: Application entry point.
+- `src/main/java/com/chilledwindows/MainWindowController.java`: Control logic, animations, and event management.
+- `src/main/resources/com/chilledwindows/MainWindow.fxml`: User interface layout.
+- `src/main/resources/com/chilledwindows/`: Multimedia and visual resources.
 
 ---
-Desarrollado con JavaFX.
+Developed with JavaFX.
