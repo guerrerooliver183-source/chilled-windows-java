@@ -1,31 +1,44 @@
-# Chilled Windows Java (JavaFX)
+# Chilled Windows Java
 
-Este proyecto es una conversión de la aplicación original [chilled-windows-java](https://github.com/guerrerooliver183-source/chilled-windows-java.git) de C#/WPF a Java/JavaFX.
+Versión de la aplicación **Chilled Windows** desarrollada íntegramente en **Java** utilizando la plataforma **JavaFX**.
 
 ## Descripción
 
-La aplicación es un visor multimedia que realiza transformaciones visuales (rotaciones y volteos) en respuesta a eventos de tiempo y teclado.
+**Chilled Windows Java** es una aplicación de escritorio diseñada para ofrecer una experiencia multimedia dinámica. Utiliza transformaciones visuales avanzadas, como rotaciones y efectos de volteo (flipping), sincronizados con eventos temporales y de teclado para crear una interfaz interactiva y visualmente atractiva.
+
+## Características Principales
+
+- **Multiplataforma:** Compatible con Windows, macOS y Linux gracias a JavaFX.
+- **Interfaz Dinámica:** Implementada con FXML para una separación clara entre diseño y lógica.
+- **Animaciones Fluidas:** Sistema de temporización optimizado para transformaciones en tiempo real.
 
 ## Tecnologías Utilizadas
 
-- **Java 17**
-- **JavaFX 17** (UI, Gráficos y Multimedia)
-- **Maven** (Gestión de dependencias y construcción)
+- **Java 17+**
+- **JavaFX 17** (Gráficos, UI y Multimedia)
+- **Maven** (Gestión de dependencias y automatización de construcción)
 
 ## Cómo Ejecutar
 
-Para ejecutar el proyecto localmente, asegúrate de tener instalado Java 17+ y Maven. Luego, utiliza el siguiente comando:
+Para compilar y ejecutar el proyecto en tu máquina local, asegúrate de tener instalado el JDK 17 (o superior) y Maven.
 
 ```bash
+# Clonar el repositorio
+git clone https://github.com/guerrerooliver183-source/chilled-windows-java.git
+
+# Entrar al directorio
+cd chilled-windows-java
+
+# Ejecutar la aplicación
 mvn clean javafx:run
 ```
 
 ## Estructura del Proyecto
 
-- `src/main/java/com/chilledwindows/Main.java`: Clase principal que inicia la aplicación JavaFX.
-- `src/main/java/com/chilledwindows/MainWindowController.java`: Controlador que maneja la lógica de la UI y las animaciones.
-- `src/main/resources/com/chilledwindows/MainWindow.fxml`: Definición de la interfaz de usuario en formato FXML.
-- `src/main/resources/com/chilledwindows/`: Recursos de imagen utilizados por la aplicación.
+- `src/main/java/com/chilledwindows/Main.java`: Punto de entrada de la aplicación.
+- `src/main/java/com/chilledwindows/MainWindowController.java`: Lógica de control, animaciones y gestión de eventos.
+- `src/main/resources/com/chilledwindows/MainWindow.fxml`: Diseño de la interfaz de usuario.
+- `src/main/resources/com/chilledwindows/`: Recursos multimedia y visuales.
 
 ---
-Convertido automáticamente por Manus AI.
+Desarrollado con JavaFX.
