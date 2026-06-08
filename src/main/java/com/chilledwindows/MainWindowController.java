@@ -17,8 +17,18 @@ import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
 import javafx.stage.Screen;
 
+import java.awt.AWTException;
+import java.awt.Rectangle;
+import java.awt.Robot;
+import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import javax.imageio.ImageIO;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 public class MainWindowController implements Initializable {
 
@@ -73,8 +83,31 @@ public class MainWindowController implements Initializable {
         screenWidth = (int) Screen.getPrimary().getBounds().getWidth();
         screenHeight = (int) Screen.getPrimary().getBounds().getHeight();
 
+        // Capture screen similar to C# CopyFromScreen
+        try {
+            Robot robot = new Robot();
+            Rectangle screenRect = new Rectangle(Toolkit.getDefaultToolkit().getScreenSize());
+            BufferedImage screenFullImage = robot.createScreenCapture(screenRect);
+
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ImageIO.write(screenFullImage, "png", baos);
+            byte[] bytes = baos.toByteArray();
+            firstBg.setImage(new Image(new ByteArrayInputStream(bytes)));
+        } catch (AWTException | IOException e) {
+            System.err.println("Error capturing screen: " + e.getMessage());
+            // Fallback to default image if screen capture fails
+            firstBg.setImage(new Image(getClass().getResourceAsStream("/com/chilledwindows/Image1.jpg")));
+        }
+
+        // Setup window properties similar to C#
+        javafx.application.Platform.runLater(() -> {
+            javafx.stage.Stage stage = (javafx.stage.Stage) rootPane.getScene().getWindow();
+            stage.initStyle(javafx.stage.StageStyle.UNDECORATED);
+            stage.setAlwaysOnTop(true);
+            stage.setMaximized(true);
+        });
+
         // Load images
-        firstBg.setImage(new Image(getClass().getResourceAsStream("/com/chilledwindows/Image1.jpg")));
         bg2.setImage(new Image(getClass().getResourceAsStream("/com/chilledwindows/ja.png")));
         // Load and play video
         try {
@@ -120,48 +153,68 @@ public class MainWindowController implements Initializable {
     }
 
     private void dt_Tick() {
-        frameIndex++;
+        if (mediaView.getMediaPlayer() != null) {
+            frameIndex = (int) Math.floor(mediaView.getMediaPlayer().getCurrentTime().toMillis() / 33.33333);
+        } else {
+            frameIndex++;
+        }
+        
+        label.setText("Frame:" + frameIndex);
 
-        if (frameIndex == 1) {
-            // Initial setup, similar to C# code
-            label.setVisible(true);
-            label.setText("Chilled Windows");
-            firstBg.setVisible(true);
+        if (frameIndex == 438) {
+            refreshFirstFlips = false;
+            firstBg.setVisible(false);
+            twoGrid.setVisible(true);
+        }
+        if (frameIndex == 585) {
+            refreshSecondFlips = false;
+        }
+        if (frameIndex == 622) {
+            bgRectangle.setVisible(false);
+            double num = screenWidth * 0.13817330210772832;
+            double num2 = screenHeight * 0.3541666666666667;
+            
+            // Initialize transformations for twoGrid
+            twoGrid.getTransforms().clear();
+            twoGrid.getTransforms().addAll(gTransTransform, gScaleTransform);
+
+            // Animate the transformations
+            javafx.animation.Timeline timeline = new javafx.animation.Timeline(
+                new javafx.animation.KeyFrame(javafx.util.Duration.millis(500),
+                    new javafx.animation.KeyValue(gTransTransform.xProperty(), num * 3.0, javafx.animation.Interpolator.EASE_BOTH),
+                    new javafx.animation.KeyValue(gTransTransform.yProperty(), num2 * 3.0, javafx.animation.Interpolator.EASE_BOTH),
+                    new javafx.animation.KeyValue(gScaleTransform.xProperty(), 0.3, javafx.animation.Interpolator.EASE_BOTH),
+                    new javafx.animation.KeyValue(gScaleTransform.yProperty(), 0.3, javafx.animation.Interpolator.EASE_BOTH)
+                )
+            );
+            timeline.play();
+        }
+        if (frameIndex == 665) {
             twoGrid.setVisible(false);
         }
+        if (frameIndex == 1260) {
+            javafx.application.Platform.exit();
+            System.exit(0);
+        }
 
-        // Logic for flipTimes
-        if (flipIndex < flipTimes.length && flipTimes[flipIndex] == frameIndex) {
-            if (refreshFirstFlips) {
-                firstBg.setVisible(false);
-                twoGrid.setVisible(true);
-                refreshFirstFlips = false;
+        if (refreshFirstFlips) {
+            if (flipIndex < flipTimes.length && flipTimes[flipIndex] <= frameIndex && flipTimes[flipIndex] != 0) {
+                flipIndex++;
+                fFlipTrans.setScaleX(fFlipTrans.getScaleX() == -1.0 ? 1.0 : -1.0);
             }
-            flipTrans1.setScaleX(flipTrans1.getScaleX() == -1.0 ? 1.0 : -1.0);
-            flipIndex++;
-        }
-
-        // Logic for flipTimes1
-        if (flipIndex1 < flipTimes1.length && flipTimes1[flipIndex1] == frameIndex) {
-            flipTrans1.setScaleX(flipTrans1.getScaleX() == -1.0 ? 1.0 : -1.0);
-            flipIndex1++;
-        }
-
-        // Logic for flipTimes2
-        if (flipIndex2 < flipTimes2.length && flipTimes2[flipIndex2] == frameIndex) {
-            if (refreshSecondFlips) {
-                // This part is a bit ambiguous in the original C# as to what exactly happens
-                // Assuming it might involve refreshing bg3 or similar
-                refreshSecondFlips = false;
+            if (frameIndex == 286) {
+                fRotateTrans.setAngle(-20.0);
+                return;
             }
-            flipTrans2.setScaleX(flipTrans2.getScaleX() == -1.0 ? 1.0 : -1.0);
-            flipIndex2++;
-        }
-
-        // Reset logic if all flips are done (simplified, original C# had more complex reset)
-        if (flipIndex >= flipTimes.length && flipIndex1 >= flipTimes1.length && flipIndex2 >= flipTimes2.length) {
-            // Consider resetting frameIndex or stopping animation if it's a one-shot animation
-            // For now, let it continue, but this might need adjustment based on desired behavior
+        } else if (refreshSecondFlips) {
+            if (flipIndex1 < flipTimes1.length && flipTimes1[flipIndex1] <= frameIndex && flipTimes1[flipIndex1] != 0) {
+                flipIndex1++;
+                flipTrans1.setScaleX(flipTrans1.getScaleX() == -1.0 ? 1.0 : -1.0);
+            }
+            if (flipIndex2 < flipTimes2.length && flipTimes2[flipIndex2] <= frameIndex && flipTimes2[flipIndex2] != 0) {
+                flipIndex2++;
+                flipTrans2.setScaleX(flipTrans2.getScaleX() == -1.0 ? 1.0 : -1.0);
+            }
         }
     }
 
