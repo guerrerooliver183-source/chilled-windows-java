@@ -44,7 +44,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>com.chilledwindows.Main</mainClass>
+                            <mainClass>com.chilledwindows.Launcher</mainClass>
                         </configuration>
                     </execution>
                 </executions>
@@ -57,7 +57,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>com.chilledwindows.Main</mainClass>
+                            <mainClass>com.chilledwindows.Launcher</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -75,7 +75,7 @@
                         <configuration>
                             <archive>
                                 <manifest>
-                                    <mainClass>com.chilledwindows.Main</mainClass>
+                                    <mainClass>com.chilledwindows.Launcher</mainClass>
                                 </manifest>
                             </archive>
                             <descriptorRefs>
