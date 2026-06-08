@@ -76,7 +76,17 @@ public class MainWindowController implements Initializable {
         // Load images
         firstBg.setImage(new Image(getClass().getResourceAsStream("/com/chilledwindows/Image1.jpg")));
         bg2.setImage(new Image(getClass().getResourceAsStream("/com/chilledwindows/ja.png")));
-        // bg3 will be set dynamically
+        // Load and play video
+        try {
+            String videoPath = getClass().getResource("/com/chilledwindows/chilledwindows.mp4").toExternalForm();
+            javafx.scene.media.Media media = new javafx.scene.media.Media(videoPath);
+            javafx.scene.media.MediaPlayer mediaPlayer = new javafx.scene.media.MediaPlayer(media);
+            mediaView.setMediaPlayer(mediaPlayer);
+            mediaPlayer.setCycleCount(javafx.scene.media.MediaPlayer.INDEFINITE);
+            mediaPlayer.play();
+        } catch (Exception e) {
+            System.err.println("Could not load video: " + e.getMessage());
+        }
 
         // Apply transforms to firstBg (similar to fFlipTrans in C#)
         firstBg.getTransforms().add(fFlipTrans);
