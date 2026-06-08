@@ -18,7 +18,6 @@ import javafx.scene.transform.Translate;
 import javafx.stage.Screen;
 
 import java.awt.AWTException;
-import java.awt.Rectangle;
 import java.awt.Robot;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
@@ -37,7 +36,7 @@ public class MainWindowController implements Initializable {
     @FXML
     private MediaView mediaView;
     @FXML
-    private Rectangle bgRectangle;
+    private javafx.scene.shape.Rectangle bgRectangle;
     @FXML
     private ImageView firstBg;
     @FXML
@@ -86,7 +85,7 @@ public class MainWindowController implements Initializable {
         // Capture screen similar to C# CopyFromScreen
         try {
             Robot robot = new Robot();
-            Rectangle screenRect = new Rectangle(Toolkit.getDefaultToolkit().getScreenSize());
+            java.awt.Rectangle screenRect = new java.awt.Rectangle(Toolkit.getDefaultToolkit().getScreenSize());
             BufferedImage screenFullImage = robot.createScreenCapture(screenRect);
 
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -148,7 +147,7 @@ public class MainWindowController implements Initializable {
 
     private void handleKeyPress(KeyEvent event) {
         if (event.getCode() == KeyCode.SPACE) {
-            fFlipTrans.setScaleX(fFlipTrans.getScaleX() == -1.0 ? 1.0 : -1.0);
+            fFlipTrans.setX(fFlipTrans.getX() == -1.0 ? 1.0 : -1.0);
         }
     }
 
@@ -200,7 +199,7 @@ public class MainWindowController implements Initializable {
         if (refreshFirstFlips) {
             if (flipIndex < flipTimes.length && flipTimes[flipIndex] <= frameIndex && flipTimes[flipIndex] != 0) {
                 flipIndex++;
-                fFlipTrans.setScaleX(fFlipTrans.getScaleX() == -1.0 ? 1.0 : -1.0);
+                fFlipTrans.setX(fFlipTrans.getX() == -1.0 ? 1.0 : -1.0);
             }
             if (frameIndex == 286) {
                 fRotateTrans.setAngle(-20.0);
@@ -209,11 +208,11 @@ public class MainWindowController implements Initializable {
         } else if (refreshSecondFlips) {
             if (flipIndex1 < flipTimes1.length && flipTimes1[flipIndex1] <= frameIndex && flipTimes1[flipIndex1] != 0) {
                 flipIndex1++;
-                flipTrans1.setScaleX(flipTrans1.getScaleX() == -1.0 ? 1.0 : -1.0);
+                flipTrans1.setX(flipTrans1.getX() == -1.0 ? 1.0 : -1.0);
             }
             if (flipIndex2 < flipTimes2.length && flipTimes2[flipIndex2] <= frameIndex && flipTimes2[flipIndex2] != 0) {
                 flipIndex2++;
-                flipTrans2.setScaleX(flipTrans2.getScaleX() == -1.0 ? 1.0 : -1.0);
+                flipTrans2.setX(flipTrans2.getX() == -1.0 ? 1.0 : -1.0);
             }
         }
     }
