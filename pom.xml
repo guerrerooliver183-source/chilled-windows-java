@@ -96,6 +96,7 @@
                             <descriptorRefs>
                                 <descriptorRef>jar-with-dependencies</descriptorRef>
                             </descriptorRefs>
+                            <appendAssemblyId>true</appendAssemblyId>
                         </configuration>
                     </execution>
                 </executions>
