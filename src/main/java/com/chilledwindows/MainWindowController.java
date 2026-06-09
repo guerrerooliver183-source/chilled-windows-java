@@ -91,11 +91,26 @@ public class MainWindowController implements Initializable {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ImageIO.write(screenFullImage, "png", baos);
             byte[] bytes = baos.toByteArray();
-            firstBg.setImage(new Image(new ByteArrayInputStream(bytes)));
+            Image screenImage = new Image(new ByteArrayInputStream(bytes));
+            firstBg.setImage(screenImage);
+            bg2.setImage(screenImage);
+            bg3.setImage(screenImage);
         } catch (AWTException | IOException e) {
             System.err.println("Error capturing screen: " + e.getMessage());
             // Fallback to default image if screen capture fails
             firstBg.setImage(new Image(getClass().getResourceAsStream("/com/chilledwindows/Image1.jpg")));
+        }
+
+        // Minimize all windows at startup, similar to C#
+        try {
+            Robot robot = new Robot();
+            robot.keyPress(java.awt.event.KeyEvent.VK_WINDOWS);
+            robot.keyPress(java.awt.event.KeyEvent.VK_D);
+            robot.keyRelease(java.awt.event.KeyEvent.VK_D);
+            robot.keyRelease(java.awt.event.KeyEvent.VK_WINDOWS);
+            Thread.sleep(300); // Small delay to allow minimization to complete
+        } catch (AWTException | InterruptedException e) {
+            System.err.println("Error minimizing windows: " + e.getMessage());
         }
 
         // Setup window properties similar to C#
@@ -104,10 +119,18 @@ public class MainWindowController implements Initializable {
             stage.initStyle(javafx.stage.StageStyle.UNDECORATED);
             stage.setAlwaysOnTop(true);
             stage.setMaximized(true);
+            // Set pivot for transformations on twoGrid, similar to RenderTransformOrigin in C#
+            twoGrid.setTranslateX(0);
+            twoGrid.setTranslateY(0);
+            // In JavaFX, pivot is set on the Scale transformation itself
+            gScaleTransform.setPivotX(0);
+            gScaleTransform.setPivotY(0);
+            
+            // Ensure transforms are added to twoGrid
+            twoGrid.getTransforms().addAll(gTransTransform, gScaleTransform);
         });
 
-        // Load images
-        bg2.setImage(new Image(getClass().getResourceAsStream("/com/chilledwindows/ja.png")));
+        // Load images - bg2 and bg3 are set to screen capture, ja.png is not used as a background for bg2 as in original C#
         // Load and play video
         try {
             String videoPath = getClass().getResource("/com/chilledwindows/chilledwindows.mp4").toExternalForm();
@@ -121,7 +144,7 @@ public class MainWindowController implements Initializable {
         }
 
         // Apply transforms to firstBg (similar to fFlipTrans in C#)
-        firstBg.getTransforms().add(fFlipTrans);
+        firstBg.getTransforms().addAll(fFlipTrans, fRotateTrans);
 
         // Apply transforms to bg2 and bg3 (similar to FlipTrans1 and FlipTrans2 in C#)
         bg2.getTransforms().add(flipTrans1);
@@ -148,6 +171,7 @@ public class MainWindowController implements Initializable {
     private void handleKeyPress(KeyEvent event) {
         if (event.getCode() == KeyCode.SPACE) {
             fFlipTrans.setX(fFlipTrans.getX() == -1.0 ? 1.0 : -1.0);
+            // In C#, spacebar only affects fFlipTrans, not FlipTrans1 or FlipTrans2
         }
     }
 
@@ -173,9 +197,7 @@ public class MainWindowController implements Initializable {
             double num = screenWidth * 0.13817330210772832;
             double num2 = screenHeight * 0.3541666666666667;
             
-            // Initialize transformations for twoGrid
-            twoGrid.getTransforms().clear();
-            twoGrid.getTransforms().addAll(gTransTransform, gScaleTransform);
+            // Transformations are already initialized and added to twoGrid in initialize()
 
             // Animate the transformations
             javafx.animation.Timeline timeline = new javafx.animation.Timeline(
@@ -203,8 +225,10 @@ public class MainWindowController implements Initializable {
             }
             if (frameIndex == 286) {
                 fRotateTrans.setAngle(-20.0);
-                return;
             }
+            // The C# code has a 'return' here, but it's inside an 'if' that's part of a larger 'if (refreshFirstFlips)'.
+            // Removing the return to allow subsequent flip logic to execute if needed, or if the frameIndex condition is met later.
+            // This might need further adjustment if the exact timing of flips is critical and the original 'return' was intentional to stop further processing for that tick.
         } else if (refreshSecondFlips) {
             if (flipIndex1 < flipTimes1.length && flipTimes1[flipIndex1] <= frameIndex && flipTimes1[flipIndex1] != 0) {
                 flipIndex1++;

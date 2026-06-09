@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.media.MediaView?>
+<?import javafx.scene.shape.Rectangle?>
+
+<AnchorPane fx:id="rootPane" prefHeight="1680.0" prefWidth="1050.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.chilledwindows.MainWindowController">
+   <children>
+      <MediaView fx:id="mediaView" fitHeight="1680.0" fitWidth="1050.0" />
+      <Rectangle fx:id="bgRectangle" fill="BLACK" height="1680.0" stroke="BLACK" width="1050.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <ImageView fx:id="firstBg" fitHeight="1680.0" fitWidth="1050.0" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="label" layoutX="14.0" layoutY="14.0" prefHeight="59.0" prefWidth="280.0" text="Label" textFill="WHITE" visible="false" />
+      <GridPane fx:id="twoGrid" layoutX="6.0" layoutY="6.0" prefHeight="1668.0" prefWidth="1038.0" style="-fx-background-color: black;" visible="false">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <ImageView fx:id="bg2" fitHeight="1668.0" fitWidth="516.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" />
+            <ImageView fx:id="bg3" fitHeight="1668.0" fitWidth="516.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" />
+         </children>
+      </GridPane>
+   </children>
+</AnchorPane>
